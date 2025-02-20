@@ -1,5 +1,5 @@
 import express, { Request, Response, Application, NextFunction } from 'express';
-import { router } from './routers/routers';
+import { router } from './routes';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import 'express-async-errors';

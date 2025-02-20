@@ -1,9 +1,3 @@
-# backend
-Criando o server
-# o nome da branch é server
-
-# Bibliotecas que serao usadas no programa
-
 yarn add express
 yarn add typescript -D
 yarn add @types/express
@@ -12,7 +6,7 @@ yarn add express-async-errors
 yarn add jsonwebtoken
 yarn add cors
 
-# O BANCO DE DADOS RELACIONAL QUE ESTA SENDO USADO NESTA APLICAÇÃO É O POSTGRES E PARA MANIPULAR AS TABELAS E O PROPRIO BANCO EM SI, ESTA SENDO USADO O POSTBIRD
+# o BANCO DE DADOS RELACIONAL QUE ESTA SENDO USADO NESTA APLICAÇÃO É O POSTGRES E PARA MANIPULAR AS TABELAS E O PROPRIO BANCO EM SI, ESTA SENDO USADO O POSTBIRD
 
 para trabalhar com o banco de dados e o typescrip esta sendo usado o prisma ORM
 
@@ -35,4 +29,3 @@ https://www.md5hashgenerator.com/
 
 yarn add multer
 yarn add @types/multer -D
-
