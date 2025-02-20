@@ -1,0 +1,1 @@
+// # teste de api do game yugioh https://db.ygoprodeck.com/api/v7/cardinfo.php

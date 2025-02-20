@@ -1,0 +1,173 @@
+// // This is your Prisma schema file,
+// // learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+ }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Criando o model de usuario
+// Comando para criar uma migration: yarn prisma migrate dev
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  //   // Mapeando como eu quero que a tabela seja criada no meu banco de dados
+  @@map("users")
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  name       String    @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+ // Fazendo o relacionamento com a tabela produto
+  products   Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  price       String
+  description String
+  banner      String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  //   // Pegando a referencia da tabela category
+  category Category @relation(fields: [category_id], references: [id])
+  category_id String // Criando a referencia category
+  items    Item[]
+
+  @@map("products")
+}
+
+model Order {
+  id         String   @id @default(uuid())
+  table      Int
+  status     Boolean  @default(false)
+  draft      Boolean  @default(true)
+  name       String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  items      Item[]
+
+  @@map("orders")
+}
+
+model Item {
+  id         String   @id @default(uuid())
+  amount     Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  order      Order   @relation(fields: [order_id], references: [id])
+  product    Product @relation(fields: [product_id], references: [id])
+  order_id   String
+  product_id String
+
+  @@map("items")
+}
+
+// Referencia da aula em que foi criado esse codigo // https://www.udemy.com/course/dev-fullstack/learn/lecture/31683280#overview
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// // Criando o model de usuario
+// // Comando para criar uma migration: yarn prisma migrate dev
+// // Resetar as migrates feitas: npx prisma migrate reset
+
+// model User {
+//   id         String    @id @default(uuid())
+//   name       String
+//   email      String   @unique
+//   password   String
+//   created_at DateTime  @default(now())
+//   updated_at DateTime  @default(now()) @updatedAt
+//   passwordRecoveries PasswordRecovery[]
+
+//   @@map("users")
+// }
+
+// model Category {
+//   id         String    @id @default(uuid())
+//   name       String   @unique
+//   created_at DateTime  @default(now())
+//   updated_at DateTime  @default(now()) @updatedAt
+//   products   Product[]
+
+//   @@map("categories")
+// }
+
+// model Product {
+//   id          String    @id @default(uuid())
+//   name        String
+//   price       String
+//   description String
+//   banner      String
+//   created_at  DateTime  @default(now())
+//   updated_at  DateTime  @default(now()) @updatedAt
+//   category    Category @relation(fields: [category_id], references: [id])
+//   category_id String
+//   items       Item[]
+
+//   @@map("products")
+// }
+
+// model Order {
+//   id         String    @id @default(uuid())
+//   table      Int
+//   status     Boolean   @default(false)
+//   draft      Boolean   @default(true)
+//   name       String?
+//   created_at DateTime  @default(now())
+//   updated_at DateTime  @default(now()) @updatedAt
+//   items      Item[]
+
+//   @@map("orders")
+// }
+
+// model Item {
+//   id         String @id @default(uuid())
+//   amount     Int
+//   created_at DateTime  @default(now())
+//   updated_at DateTime  @default(now()) @updatedAt
+//   order      Order   @relation(fields: [order_id], references: [id])
+//   product    Product @relation(fields: [product_id], references: [id])
+//   order_id   String
+//   product_id String
+
+//   @@map("items")
+// }
+
+// model PasswordRecovery {
+//   id        String   @id @default(uuid())
+//   userId    String
+//   token     String   @unique
+//   expiresAt DateTime
+//   created_at DateTime  @default(now())
+//   updated_at DateTime  @default(now()) @updatedAt
+//   user      User     @relation(fields: [userId], references: [id])
+
+//   @@map("password_recoveries")
+//   @@index([userId])
+// }
