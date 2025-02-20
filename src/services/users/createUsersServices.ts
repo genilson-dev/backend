@@ -1,7 +1,11 @@
-// services/CreateUserService.ts
-import prismaDB from "../../prisma";
-import { UserRequest } from "../../interfaces";
+import prismaClient from "../../prisma";
 import { hash } from "bcryptjs";
+
+interface UserRequest {
+    name: string;
+    email: string;
+    password: string;
+}
 
 class CreateUserService {
     async execute({ name, email, password }: UserRequest) {
@@ -11,7 +15,7 @@ class CreateUserService {
         }
 
         // Verificar se o email já consta no banco de dados
-        const userAlreadyExists = await prismaDB.user.findFirst({
+        const userAlreadyExists = await prismaClient.user.findFirst({
             where: {
                 email: email,
             },
@@ -23,7 +27,7 @@ class CreateUserService {
 
         const passwordHash = await hash(password, 8);
 
-        const user = await prismaDB.user.create({
+        const user = await prismaClient.user.create({
             data: {
                 name: name,
                 email: email,
