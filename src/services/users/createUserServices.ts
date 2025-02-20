@@ -4,7 +4,7 @@ import { UserRequest } from "../../interfaces";
 import { hash } from "bcryptjs";
 
 class CreateUserService {
-    async execute({ nome, email, password }: UserRequest) {
+    async execute({ name, email, password }: UserRequest) {
         // Verificando se o email existe
         if (!email) {
             throw new Error("Email incorreto ou não existe");
@@ -25,7 +25,7 @@ class CreateUserService {
 
         const user = await prismaDB.user.create({
             data: {
-                name: nome,
+                name: name,
                 email: email,
                 password: passwordHash,
             },
