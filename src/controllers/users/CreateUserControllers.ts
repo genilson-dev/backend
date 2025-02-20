@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { CreateUserService } from '../../services/users/createUserServices';
+
 class CreateUserController {
     async handle(req: Request, res: Response) {
         const { name, email, password } = req.body;
